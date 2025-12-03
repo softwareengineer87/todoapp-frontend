@@ -1,0 +1,37 @@
+.container-form .form-todo form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.form-todo form .input-form {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.form-todo form .input-form input,
+.form-todo form .input-form textarea,
+.form-todo form .input-form select {
+  padding: .5rem;
+  background-color: var(--bgform);
+  color: var(--text);
+}
+
+textarea {
+  resize: none;
+}
+
+.btn-save {
+  background-color: var(--blue);
+  color: var(--text);
+  padding: .5rem 2rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+@media screen and (min-width: 48rem) {
+  .container-form .form-todo form {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

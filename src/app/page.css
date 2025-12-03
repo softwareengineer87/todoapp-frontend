@@ -1,0 +1,14 @@
+.container-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 2%;
+}
+
+.container-main .box-todos {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
