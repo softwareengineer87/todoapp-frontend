@@ -1,41 +1,32 @@
 
+import { useTodo } from '@/data/hooks/useTodo';
 import './completed.css';
 import { IconTrash } from '@tabler/icons-react';
+import { Todo } from '@/models/Todo';
+import { CardTodo } from '../CardTodo';
 
 function Todos() {
+
+  const { todos } = useTodo();
+
+  const notCompleted = todos.filter((todo: Todo) => todo.completed === false);
+
+  function finish() {
+    console.log('finalizado');
+  }
 
   return (
     <section className='container-completed'>
       <h3>Tarefas por fazer</h3>
-      <div className='completed'>
-        <div className='box-top'>
-          <h4>Criar tela de login</h4>
-          <span>28/10/2025</span>
-          <p className='priority'>alta</p>
-          <h5><IconTrash size={20} /></h5>
-          <button
-            className='finish'
-          >
-            concluir
-          </button>
-        </div>
-        <p>Criar tela de login para o sistema</p>
-      </div>
-
-      <div className='completed'>
-        <div className='box-top'>
-          <h4>Criar tela de login</h4>
-          <span>28/10/2025</span>
-          <p className='priority'>alta</p>
-          <h5><IconTrash size={20} /></h5>
-          <button
-            className='finish'
-          >
-            concluir
-          </button>
-        </div>
-        <p>Criar tela de login para o sistema</p>
-      </div>
+      {notCompleted.map((todo) => (
+        <CardTodo
+          title={todo.title}
+          date={todo.date}
+          priority={todo.priority}
+          description={todo.description}
+          onClick={finish}
+        />
+      ))}
     </section>
   );
 
