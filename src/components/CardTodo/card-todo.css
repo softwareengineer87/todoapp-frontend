@@ -7,17 +7,22 @@
   border-radius: 1rem;
 }
 
+.completed.is-expiration {
+  border-right: .1rem solid indianred;
+}
+
 .completed .box-top {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  align-items: start;
 }
 
 .completed .box-top .priority {
   padding: 0 .5rem;
   border-radius: 1rem;
   color: var(--bg);
-  font-size: 1.3rem;
+  font-size: 1vw;
 }
 
 .completed .box-top h5 {
@@ -47,4 +52,23 @@
 
 .low {
   background-color: aquamarine;
+}
+
+.completed .box-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.completed .box-bottom span {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: greenyellow;
+}
+
+.expiration {
+  color: indianred;
+  font-size: 1.2rem;
+
 }

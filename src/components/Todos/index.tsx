@@ -1,22 +1,28 @@
 
-import { useTodo } from '@/data/hooks/useTodo';
-import './completed.css';
-import { IconTrash } from '@tabler/icons-react';
+import './todos.css';
 import { Todo } from '@/models/Todo';
 import { CardTodo } from '../CardTodo';
+import { useEffect, useState } from 'react';
 
-function Todos() {
+interface TodosProps {
+  todos: Todo[];
+}
 
-  const { todos } = useTodo();
+function Todos({ todos }: TodosProps) {
 
-  const notCompleted = todos.filter((todo: Todo) => todo.completed === false);
+  const [notCompleted, setNotCompleted] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const not = todos.filter((todo: Todo) => todo.completed === false);
+    setNotCompleted(not);
+  }, []);
 
   function finish() {
     console.log('finalizado');
   }
 
   return (
-    <section className='container-completed'>
+    <section className='container-todos'>
       <h3>Tarefas por fazer</h3>
       {notCompleted.map((todo) => (
         <CardTodo

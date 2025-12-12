@@ -1,60 +1,69 @@
 
-import { IconTrash } from '@tabler/icons-react';
+import {
+  IconTrash,
+  IconTag
+} from '@tabler/icons-react';
 import './card-todo.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { Todo } from '@/models/Todo';
 
 interface CardTodoProps {
-  title: string;
-  date: string;
-  priority: string;
-  description: string;
+  todo: Todo;
   onClick(): void;
+  deleteTodo(todoId: string): void;
 }
 
 function CardTodo({
-  title,
-  date,
-  priority,
-  description,
-  onClick
+  todo,
+  onClick,
+  deleteTodo
 }: CardTodoProps) {
 
-  const [priorityColor, setPriorityColor] = useState<string>('');
-  console.log(priorityColor);
+  function formatDate(date: Date) {
+    return Intl.DateTimeFormat('pt-br', {
+      dateStyle: 'short'
+    }).format(date)
+  }
 
+  function checkExpiration() {
+    const now = Date.now();
+    return new Date(todo.date).getTime() < now;
+  }
+
+  const [date, _] = todo.date.split('T');
+  const dt = new Date(date);
 
   useEffect(() => {
-    switch (priority) {
-      case 'high':
-        setPriorityColor('high');
-        break;
-      case 'medium':
-        setPriorityColor('medium');
-        break;
-      case 'low':
-        setPriorityColor('low');
-        break;
-      default:
-        setPriorityColor('');
-    }
-
-  }, [])
+    checkExpiration();
+  }, []);
 
   return (
-    <div className='completed'>
+    <div className={`completed ${checkExpiration() && 'is-expiration'}`}>
       <div className='box-top'>
-        <h4>{title}</h4>
-        <span>{date}</span>
-        <p className={`priority ${priorityColor}`}>{priority}</p>
-        <h5><IconTrash size={20} /></h5>
+        <h4>{todo.title}</h4>
+        <span>{formatDate(dt)}</span>
+        <p className={`priority 
+          ${todo.priority === 'low' ? 'low' : todo.priority === 'medium' ? 'medium' : 'high'}`}
+        >
+          {todo.priority === 'low' ? 'baixa' : todo.priority === 'medium' ? 'media' : 'alta'}
+        </p>
+        <h5 onClick={() => deleteTodo(todo.todo_id!)}>
+          <IconTrash size={20} />
+        </h5>
         <button
           onClick={onClick}
           className='finish'
         >
-          concluir
+          {todo.completed ? 'Restaurar' : 'Concluir'}
         </button>
       </div>
-      <p>{description}</p>
+      <div className='box-bottom'>
+        <p>{todo.description}</p>
+        {checkExpiration() && (
+          <h6 className='expiration'>atrasada</h6>
+        )}
+        <span>{todo.tag} <IconTag className='tag' /></span>
+      </div>
     </div>
   );
 
